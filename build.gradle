@@ -16,11 +16,10 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	finalName "springbootgradelwithgithubactions1"
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
 }
-tasks.bootJar {
-	archiveBaseName.set("springbootgradelwithgithubactions1")
-}
+
