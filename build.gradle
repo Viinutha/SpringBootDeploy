@@ -29,11 +29,11 @@ task prepareDockerfileTemplate(type: Copy) {
 	filter { it.replaceAll('<%=version%>', project.version) }
 	into "$buildDir"
 }
-// add explicit dependencies, otherwise we get warning at console
-dockerPrepare.dependsOn bootJar
-bootJar.dependsOn prepareDockerfileTemplate
-bootJarMainClassName.dependsOn prepareDockerfileTemplate
-bootRunMainClassName.dependsOn prepareDockerfileTemplate
+//// add explicit dependencies, otherwise we get warning at console
+//dockerPrepare.dependsOn bootJar
+//bootJar.dependsOn prepareDockerfileTemplate
+//bootJarMainClassName.dependsOn prepareDockerfileTemplate
+//bootRunMainClassName.dependsOn prepareDockerfileTemplate
 
 // https://plugins.gradle.org/plugin/com.palantir.docker
 docker {
