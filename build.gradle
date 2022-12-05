@@ -44,8 +44,7 @@ docker {
 // https://plugins.gradle.org/plugin/com.palantir.docker-run
 dockerRun {
 	name "${project.name}"
-	image "${dockerOwner}/${project.name}:${project.version}"
-	ports '8086:8086','8087:8087'
+	image "${project.name}:${project.version}"
+	ports '8086:8086'
 	clean true
-	daemonize false
 }
