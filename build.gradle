@@ -2,8 +2,8 @@ plugins {
 	id 'java'
 	id 'org.springframework.boot' version '3.0.0'
 	id 'io.spring.dependency-management' version '1.1.0'
-	id "com.palantir.docker" version "0.22.1"
-}
+	id 'com.palantir.docker' version '0.33.0'
+	id "com.palantir.docker-run" version "0.33.0"}
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
@@ -22,4 +22,31 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+task prepareDockerfileTemplate(type: Copy) {
+	from "src/main/resources/docker"
+	include "Dockerfile"
+	filter { it.replaceAll('<%=name%>', project.name) }
+	filter { it.replaceAll('<%=version%>', project.version) }
+	into "$buildDir"
+}
+// add explicit dependencies, otherwise we get warning at console
+dockerPrepare.dependsOn bootJar
+bootJar.dependsOn prepareDockerfileTemplate
+bootJarMainClassName.dependsOn prepareDockerfileTemplate
+bootRunMainClassName.dependsOn prepareDockerfileTemplate
 
+// https://plugins.gradle.org/plugin/com.palantir.docker
+docker {
+	name "${dockerOwner}/${project.name}:${project.version}"
+	files "$buildDir/libs/${project.name}-${project.version}.jar"
+	dockerfile file("$buildDir/Dockerfile")
+}
+
+// https://plugins.gradle.org/plugin/com.palantir.docker-run
+dockerRun {
+	name "${project.name}"
+	image "${dockerOwner}/${project.name}:${project.version}"
+	ports '8086:8086','8087:8087'
+	clean true
+	daemonize false
+}
