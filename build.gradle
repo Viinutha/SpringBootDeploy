@@ -37,11 +37,10 @@ task prepareDockerfileTemplate(type: Copy) {
 
 // https://plugins.gradle.org/plugin/com.palantir.docker
 docker {
-	name "${vinutha418}/${project.name}:${project.version}"
-	files "$buildDir/libs/${project.name}-${project.version}.jar"
-	dockerfile file("$buildDir/Dockerfile")
+	name "${project.name}:${project.version}"
+	files 'springbootgradelwithgithubactions1.jar'
+	tag 'DockerHub', "Viinutha/SpringBootDeploy:${project.version}"
 }
-
 // https://plugins.gradle.org/plugin/com.palantir.docker-run
 dockerRun {
 	name "${project.name}"
