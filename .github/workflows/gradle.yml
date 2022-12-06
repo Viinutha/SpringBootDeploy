@@ -36,8 +36,6 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: vinutha418/springbootgradelwithgithubactions1
-        tags: latest
-        registry: docker.io
         dockerfile: Dockerfile
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
