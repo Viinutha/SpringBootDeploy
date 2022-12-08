@@ -1,4 +1,8 @@
-FROM openjdk:17
+FROM openjdk:17-jdk-alpine
+volume /tmp
+ARG JAR_FILE
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","/app.jar"]
 
 EXPOSE 8086
 ADD springbootgradelwithgithubactions1.jar springbootgradelwithgithubactions1.jar
